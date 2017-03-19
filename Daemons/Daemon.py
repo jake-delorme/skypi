@@ -17,13 +17,4 @@ for section in config.sections():
 		print section + " - " + key[0] + " - " + key[1]
 
 
-try:
-	gsm = serial.Serial(
-		port=config.get('GSM','port'),
-		baudrate=config.get('GSM','baudrate'))
-except ValueError:
-	print "Invalid parameters for Serial port"
-	sys.exit(1)
-except serial.SerialException:
-	print "Cannot open serial port"
-	sys.exit(1)
+
