@@ -30,9 +30,11 @@ sm.Init()
 
 # Reads network information from phone
 netinfo = sm.GetNetworkInfo()
+netstatus = GetSignalQuality()
 
 # Print information
 print 'Network name: %s' % netinfo['NetworkName']
+print 'Signal Strength: %s' % netstatus['SignalPercent']
 print 'Network code: %s' % netinfo['NetworkCode']
 print 'LAC: %s' % netinfo['LAC']
 print 'CID: %s' % netinfo['CID']
