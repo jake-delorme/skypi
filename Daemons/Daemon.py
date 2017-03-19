@@ -3,13 +3,12 @@
 import ConfigParser
 import os
 import sys
-import serial
 
 config = ConfigParser.SafeConfigParser()
 try:
-	config.readfp(open(os.path.dirname(os.path.abspath(__file__)) + "/../config.ini"))
+	config.readfp(open(os.path.dirname(os.path.abspath(__file__)) + "/config.ini"))
 except IOError:
-	print "Cannot find configuration file " + os.path.dirname(os.path.abspath(__file__)) + "/../config.ini"
+	print "Cannot find configuration file " + os.path.dirname(os.path.abspath(__file__)) + "/config.ini"
 	sys.exit(1)
 
 for section in config.sections():
