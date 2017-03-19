@@ -3,6 +3,7 @@
 import ConfigParser
 import os
 import sys
+import gammu
 
 config = ConfigParser.SafeConfigParser()
 try:
@@ -17,3 +18,21 @@ for section in config.sections():
 
 
 
+
+# Create state machine object
+sm = gammu.StateMachine()
+
+# Read ~/.gammurc
+sm.ReadConfig()
+
+# Connect to phone
+sm.Init()
+
+# Reads network information from phone
+netinfo = sm.GetNetworkInfo()
+
+# Print information
+print 'Network name: %s' % netinfo['NetworkName']
+print 'Network code: %s' % netinfo['NetworkCode']
+print 'LAC: %s' % netinfo['LAC']
+print 'CID: %s' % netinfo['CID']
