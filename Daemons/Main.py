@@ -5,6 +5,7 @@ import sys
 import logging
 import threading
 import Queue
+import time
 
 # Import all the other classes
 import GSM
@@ -27,12 +28,23 @@ def Main():
 		for key in config.items(section):
 			print section + " - " + key[0] + " - " + key[1]
 
-
+	# Battery object
 	piBattery = Battery.Battery()
-	piGSM = GSM.GSM()
-	piGPS = GPS.GPS()
-	piCamera = Camera.Camera()
+	piBattery.addToQueue("Check","%")
 
+	# GSM object
+	piGSM = GSM.GSM()
+	piGSM.addToQueue("SendSMS","Im Alive!",priority=1)
+
+	# GPS Object
+	piGPS = GPS.GPS()
+	piGPS.addToQueue("Update","Height",priority=2)
+
+	# Camera object
+	piCamera = Camera.Camera()
+	piCamera.addToQueue("Selfie!","")
+
+	time.sleep(1)
 
 
 Main()
