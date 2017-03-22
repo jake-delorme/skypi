@@ -12,6 +12,7 @@ import GSM
 import Battery
 import GPS
 import Camera
+import Manager
 
 # The logging config
 logging.basicConfig(level=logging.DEBUG, format='[%(levelname)s] %(asctime)s (%(threadName)-10s) %(message)s')
@@ -28,24 +29,30 @@ def Main():
 		for key in config.items(section):
 			print section + " - " + key[0] + " - " + key[1]
 
+
+	# Create the manager object
+	piManager = Manager.Manager()
+
 	# Battery object
-	piBattery = Battery.Battery()
+	piBattery = Battery.Battery(piManager)
 	piBattery.addToQueue("Check","%")
 
 	# GSM object
-	piGSM = GSM.GSM()
+	piGSM = GSM.GSM(piManager)
 	piGSM.addToQueue("SendSMS","Im Alive!",priority=1)
 
 	# GPS Object
-	piGPS = GPS.GPS()
+	piGPS = GPS.GPS(piManager)
 	piGPS.addToQueue("Update","Height",priority=2)
 
 	# Camera object
-	piCamera = Camera.Camera()
+	piCamera = Camera.Camera(piManager)
 	piCamera.addToQueue("Selfie!","")
 
 	time.sleep(1)
 
 
 Main()
+
+
 

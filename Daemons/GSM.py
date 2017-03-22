@@ -8,10 +8,11 @@ import os
 
 class GSM(object):
 
-	def __init__(self):
+	def __init__(self,piManager):
 		# create the object yo
 		logging.debug("Create the GSM object")
 		self.name = "GSM"
+		self.piManager = piManager
 		# Create the local queue
 		self.Queue = Queue.PriorityQueue()
 		# Create and start the threads

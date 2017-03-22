@@ -1,0 +1,52 @@
+What we need to do:
+
+Cellular Radio (GSM): (160 charachter max?)
+	Get and respond to text messages
+		health check
+		force gps update
+		Accept bash command
+		
+
+	send text messages
+		Critical alerts 
+		GPS updates (15mins?)
+
+	connect to internet
+
+	detect out of service
+
+
+GPS:
+	Get location
+	Respond to location requests
+	Timestamps
+	height
+
+
+Battery:
+	voltage
+	current draw
+	% remaining
+	runtime
+
+Camera:
+	take pake pictures at interval
+	return latest image
+	post images at internval
+
+
+Other considerations:
+	Shutting down devices (GSM)
+
+
+Things need to be decided:
+	Messaging format
+	Manager class
+
+
+
+
+
+Web Server:
+	Recieve post/put requests
+

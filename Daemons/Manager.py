@@ -5,13 +5,12 @@ import sys
 import os
 
 
-class GPS(object):
+class Manager(object):
 
-	def __init__(self,piManager):
+	def __init__(self):
 		# create the object yo
-		logging.debug("Create the GPS object")
-		self.name = "GPS"
-		self.piManager = piManager
+		logging.debug("Create the Manager object")
+		self.name = "Manager"
 		# Create the local queue
 		self.Queue = Queue.PriorityQueue()
 		# Create and start the threads
@@ -36,3 +35,14 @@ class GPS(object):
 		while 1:
 			item = self.Queue.get(True)
 			logging.debug("Process Queue Item")
+
+
+
+class DataEvent(object):	
+
+	def __init__(self,task,args):
+		self.args = args
+		self.task = task
+		self.othershit = {}
+
+
