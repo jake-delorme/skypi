@@ -6,13 +6,14 @@ import logging
 import threading
 import Queue
 import time
+import skypi
 
 # Import all the other classes
-import GSM
-import Battery
-import GPS
-import Camera
-import Manager
+#import GSM
+#import Battery
+#import GPS
+#import Camera
+#import Manager
 
 # The logging config
 logging.basicConfig(level=logging.DEBUG, format='[%(levelname)s] %(asctime)s (%(threadName)-10s) %(message)s')
@@ -29,27 +30,32 @@ def Main():
 		for key in config.items(section):
 			print section + " - " + key[0] + " - " + key[1]
 
-
 	# Create the manager object
-	piManager = Manager.Manager()
+	piManager = skypi.Manager()
 
 	# Battery object
-	piBattery = Battery.Battery(piManager)
-	piBattery.addToQueue("Check","%")
+	piBattery = skypi.Battery(piManager)
 
 	# GSM object
-	piGSM = GSM.GSM(piManager)
-	piGSM.addToQueue("SendSMS","Im Alive!",priority=1)
-
+	piGSM = skypi.GSM(piManager)
+	
 	# GPS Object
-	piGPS = GPS.GPS(piManager)
-	piGPS.addToQueue("Update","Height",priority=2)
+	piGPS = skypi.GPS(piManager)
 
 	# Camera object
-	piCamera = Camera.Camera(piManager)
-	piCamera.addToQueue("Selfie!","")
+	piCamera = skypi.Camera(piManager)
 
-	time.sleep(1)
+
+	while True:
+		# A GPS message 
+		event = skypi.Event("GetGPS","lat")
+		piManager.addToQueue(event)
+
+		# An All message
+		event = skypi.Event("SystemTest","")
+		piManager.addToQueue(event)
+
+		time.sleep(5)
 
 
 Main()
