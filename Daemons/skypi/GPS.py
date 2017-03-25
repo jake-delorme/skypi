@@ -66,7 +66,7 @@ class GPS(object):
 #			logging.debug( 'mode        ' , self.gpsd.fix.mode)
 #			logging.debug('')
 #			logging.debug( 'sats        ' , self.gpsd.satellites)
-			time.sleep(10)
+			time.sleep(1)
 
 
 

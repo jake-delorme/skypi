@@ -55,7 +55,7 @@ def Main():
 		event = skypi.Event("SystemTest","")
 		piManager.addToQueue(event)
 
-		time.sleep(5)
+		time.sleep(6000)
 
 
 Main()
