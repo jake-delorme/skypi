@@ -45,20 +45,20 @@ class GPS(object):
 			print
 			print ' GPS reading'
 			print '----------------------------------------'
-			print 'latitude    ' , gpsd.fix.latitude
-			print 'longitude   ' , gpsd.fix.longitude
-			print 'time utc    ' , gpsd.utc,' + ', gpsd.fix.time
-			print 'altitude (m)' , gpsd.fix.altitude
-			print 'eps         ' , gpsd.fix.eps
-			print 'epx         ' , gpsd.fix.epx
-			print 'epv         ' , gpsd.fix.epv
-			print 'ept         ' , gpsd.fix.ept
-			print 'speed (m/s) ' , gpsd.fix.speed
-			print 'climb       ' , gpsd.fix.climb
-			print 'track       ' , gpsd.fix.track
-			print 'mode        ' , gpsd.fix.mode
+			print 'latitude    ' , self.gpsd.fix.latitude
+			print 'longitude   ' , self.gpsd.fix.longitude
+			print 'time utc    ' , self.gpsd.utc,' + ', gpsd.fix.time
+			print 'altitude (m)' , self.gpsd.fix.altitude
+			print 'eps         ' , self.gpsd.fix.eps
+			print 'epx         ' , self.gpsd.fix.epx
+			print 'epv         ' , self.gpsd.fix.epv
+			print 'ept         ' , self.gpsd.fix.ept
+			print 'speed (m/s) ' , self.gpsd.fix.speed
+			print 'climb       ' , self.gpsd.fix.climb
+			print 'track       ' , self.gpsd.fix.track
+			print 'mode        ' , self.gpsd.fix.mode
 			print
-			print 'sats        ' , gpsd.satellites
+			print 'sats        ' , self.gpsd.satellites
 			time.sleep(10)
 
 
