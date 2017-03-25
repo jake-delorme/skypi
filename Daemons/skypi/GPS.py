@@ -42,23 +42,23 @@ class GPS(object):
 		while True:
 			os.system('clear')
 
-			print
-			print ' GPS reading'
-			print '----------------------------------------'
-			print 'latitude    ' , self.gpsd.fix.latitude
-			print 'longitude   ' , self.gpsd.fix.longitude
-			print 'time utc    ' , self.gpsd.utc,' + ', self.gpsd.fix.time
-			print 'altitude (m)' , self.gpsd.fix.altitude
-			print 'eps         ' , self.gpsd.fix.eps
-			print 'epx         ' , self.gpsd.fix.epx
-			print 'epv         ' , self.gpsd.fix.epv
-			print 'ept         ' , self.gpsd.fix.ept
-			print 'speed (m/s) ' , self.gpsd.fix.speed
-			print 'climb       ' , self.gpsd.fix.climb
-			print 'track       ' , self.gpsd.fix.track
-			print 'mode        ' , self.gpsd.fix.mode
-			print
-			print 'sats        ' , self.gpsd.satellites
+			logging.debug()
+			logging.debug( ' GPS reading')
+			logging.debug( '----------------------------------------')
+			logging.debug( 'latitude    ' , self.gpsd.fix.latitude)
+			logging.debug( 'longitude   ' , self.gpsd.fix.longitude)
+			logging.debug( 'time utc    ' , self.gpsd.utc,' + ', self.gpsd.fix.time)
+			logging.debug( 'altitude (m)' , self.gpsd.fix.altitude)
+			logging.debug( 'eps         ' , self.gpsd.fix.eps)
+			logging.debug( 'epx         ' , self.gpsd.fix.epx)
+			logging.debug( 'epv         ' , self.gpsd.fix.epv)
+			logging.debug( 'ept         ' , self.gpsd.fix.ept)
+			logging.debug( 'speed (m/s) ' , self.gpsd.fix.speed)
+			logging.debug( 'climb       ' , self.gpsd.fix.climb)
+			logging.debug( 'track       ' , self.gpsd.fix.track)
+			logging.debug( 'mode        ' , self.gpsd.fix.mode)
+			logging.debug()
+			logging.debug( 'sats        ' , self.gpsd.satellites)
 			time.sleep(10)
 
 
