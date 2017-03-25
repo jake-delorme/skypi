@@ -42,13 +42,14 @@ class GPS(object):
 		while True:
 			os.system('clear')
 
-			logging.debug('')
-			logging.debug( ' GPS reading')
-			logging.debug( '----------------------------------------')
-			logging.debug( 'latitude    ' , str(self.gpsd.fix.latitude) )
-			logging.debug( 'longitude   ' , str(self.gpsd.fix.longitude) )
-			logging.debug( 'time utc    ' , str(self.gpsd.utc),' + ',str(self.gpsd.fix.time) )
-			logging.debug( 'altitude (m)' , str(self.gpsd.fix.altitude) )
+			#logging.debug('')
+			#logging.debug( ' GPS reading')
+			#logging.debug( '----------------------------------------')
+			logging.debug( 'latitude    ' , str(self.gpsd.fix.latitude ) )
+			print 'latitude    ' , self.gpsd.fix.latitude 
+			#logging.debug( 'longitude   ' , str(self.gpsd.fix.longitude ) )
+			#logging.debug( 'time utc    ' , str(self.gpsd.utc,' + ',str(self.gpsd.fix.time ) )
+			#logging.debug( 'altitude (m)' , str(self.gpsd.fix.altitude) )
 #			logging.debug( 'eps         ' , self.gpsd.fix.eps)
 #			logging.debug( 'epx         ' , self.gpsd.fix.epx)
 #			logging.debug( 'epv         ' , self.gpsd.fix.epv)
