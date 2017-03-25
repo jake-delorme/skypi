@@ -4,8 +4,7 @@ import Queue
 import sys
 import os
 import time
-import serial
-import pynmea2
+from gps import *
 
 
 class GPS(object):
@@ -27,6 +26,7 @@ class GPS(object):
 		self.consumerThread.daemon = True
 		self.consumerThread.start()
 		# GPS values
+		self.gpsd = gps(mode=WATCH_ENABLE)
 		self.lattitude = None
 		self.longtitude = None
 		self.height = None
@@ -38,20 +38,29 @@ class GPS(object):
 	def __listener(self):
 		name = threading.current_thread().getName()
 		logging.debug("Running the "+name+" thread")
-		reader = pynmea2.NMEAStreamReader()
-
+		
 		while True:
-			com = None
-			try:
-				com = serial.Serial(port=self.serialPort,baudrate=self.baudrate, timeout=5.0)
-			except serial.SerialException:
-				logging.error('Could not connect to %s' % self.serialPort)
-				time.sleep(5.0)
-				continue
+			os.system('clear')
 
-			data = com.read(16)
-			for msg in reader.next(data):
-				logging.info(msg)
+			print
+			print ' GPS reading'
+			print '----------------------------------------'
+			print 'latitude    ' , gpsd.fix.latitude
+			print 'longitude   ' , gpsd.fix.longitude
+			print 'time utc    ' , gpsd.utc,' + ', gpsd.fix.time
+			print 'altitude (m)' , gpsd.fix.altitude
+			print 'eps         ' , gpsd.fix.eps
+			print 'epx         ' , gpsd.fix.epx
+			print 'epv         ' , gpsd.fix.epv
+			print 'ept         ' , gpsd.fix.ept
+			print 'speed (m/s) ' , gpsd.fix.speed
+			print 'climb       ' , gpsd.fix.climb
+			print 'track       ' , gpsd.fix.track
+			print 'mode        ' , gpsd.fix.mode
+			print
+			print 'sats        ' , gpsd.satellites
+			time.sleep(10)
+
 
 
 	def addToQueue(self,event,priority=99):
