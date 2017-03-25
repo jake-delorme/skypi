@@ -40,7 +40,7 @@ def Main():
 	piGSM = skypi.GSM(piManager)
 	
 	# GPS Object
-	piGPS = skypi.GPS(piManager)
+	piGPS = skypi.GPS(piManager,config.get("GPS","port"),config.get("GPS","baudrate"))
 
 	# Camera object
 	piCamera = skypi.Camera(piManager)
