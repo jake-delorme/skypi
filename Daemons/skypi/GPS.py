@@ -47,7 +47,7 @@ class GPS(object):
 			print '----------------------------------------'
 			print 'latitude    ' , self.gpsd.fix.latitude
 			print 'longitude   ' , self.gpsd.fix.longitude
-			print 'time utc    ' , self.gpsd.utc,' + ', gpsd.fix.time
+			print 'time utc    ' , self.gpsd.utc,' + ', self.gpsd.fix.time
 			print 'altitude (m)' , self.gpsd.fix.altitude
 			print 'eps         ' , self.gpsd.fix.eps
 			print 'epx         ' , self.gpsd.fix.epx
