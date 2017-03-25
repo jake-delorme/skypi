@@ -42,7 +42,7 @@ class GPS(object):
 		while True:
 			os.system('clear')
 
-			logging.debug()
+			logging.debug('')
 			logging.debug( ' GPS reading')
 			logging.debug( '----------------------------------------')
 			logging.debug( 'latitude    ' , self.gpsd.fix.latitude)
@@ -57,7 +57,7 @@ class GPS(object):
 			logging.debug( 'climb       ' , self.gpsd.fix.climb)
 			logging.debug( 'track       ' , self.gpsd.fix.track)
 			logging.debug( 'mode        ' , self.gpsd.fix.mode)
-			logging.debug()
+			logging.debug('')
 			logging.debug( 'sats        ' , self.gpsd.satellites)
 			time.sleep(10)
 
