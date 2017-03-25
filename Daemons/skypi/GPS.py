@@ -51,7 +51,7 @@ class GPS(object):
 			#logging.debug('')
 			#logging.debug( ' GPS reading')
 			#logging.debug( '----------------------------------------')
-			logging.debug( 'latitude    ' , str(self.gpsd.fix.latitude ) )
+			logging.debug( 'latitude    %s' , self.gpsd.fix.latitude  )
 			#print 'latitude    ' , self.gpsd.fix.latitude 
 			#logging.debug( 'longitude   ' , str(self.gpsd.fix.longitude ) )
 			#logging.debug( 'time utc    ' , str(self.gpsd.utc,' + ',str(self.gpsd.fix.time ) )
