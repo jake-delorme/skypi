@@ -40,7 +40,8 @@ class GPS(object):
 		logging.debug("Running the "+name+" thread")
 		
 		while True:
-			os.system('clear')
+			self.gpsd.next() 
+			#os.system('clear')
 
 			#logging.debug('')
 			#logging.debug( ' GPS reading')
