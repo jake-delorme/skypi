@@ -18,6 +18,17 @@ class GPS(object):
 		self.piManager = piManager
 		# Create the local queue
 		self.Queue = Queue.PriorityQueue()
+		
+		# GPS values
+		self.gpsd = gps(mode=WATCH_ENABLE)
+		self.lattitude = None
+		self.longtitude = None
+		self.height = None
+		
+		# Register for messages
+		self.piManager.register(self,"SystemTest")
+		self.piManager.register(self,"GetGPS")
+
 		# Create and start the threads
 		self.listenerThread = threading.Thread(target=self.__listener, name=self.name+"-listener")
 		self.listenerThread.daemon = True
@@ -25,14 +36,7 @@ class GPS(object):
 		self.consumerThread = threading.Thread(target=self.__queueConsumer, name=self.name+"-consumer")
 		self.consumerThread.daemon = True
 		self.consumerThread.start()
-		# GPS values
-		self.gpsd = gps(mode=WATCH_ENABLE)
-		self.lattitude = None
-		self.longtitude = None
-		self.height = None
-		# Register for messages
-		self.piManager.register(self,"SystemTest")
-		self.piManager.register(self,"GetGPS")
+		
 		
 
 	def __listener(self):
