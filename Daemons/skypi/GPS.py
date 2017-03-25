@@ -5,7 +5,8 @@ import sys
 import os
 import time
 from gps import *
-
+import pprint
+pp = pprint.pprint()
 
 class GPS(object):
 
@@ -44,9 +45,9 @@ class GPS(object):
 		logging.debug("Running the "+name+" thread")
 		
 		while True:
-			self.gpsd.next() 
+			data = self.gpsd.next() 
 			#os.system('clear')
-
+			pp.pprint(data)
 			#logging.debug('')
 			#logging.debug( ' GPS reading')
 			#logging.debug( '----------------------------------------')
