@@ -47,7 +47,7 @@ class GPS(object):
 		while True:
 			data = self.gpsd.next() 
 			#os.system('clear')
-			pp.pprint(data)
+			#pp.pprint(data)
 			#logging.debug('')
 			#logging.debug( ' GPS reading')
 			#logging.debug( '----------------------------------------')
@@ -66,7 +66,7 @@ class GPS(object):
 #			logging.debug( 'mode        ' , self.gpsd.fix.mode)
 #			logging.debug('')
 #			logging.debug( 'sats        ' , self.gpsd.satellites)
-			time.sleep(1)
+			
 
 
 
