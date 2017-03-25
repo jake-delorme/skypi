@@ -6,7 +6,7 @@ import os
 import time
 from gps import *
 import pprint
-pp = pprint.pprint()
+pp = pprint.PrettyPrinter(indent=4))
 
 class GPS(object):
 
