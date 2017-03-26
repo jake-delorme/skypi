@@ -27,9 +27,10 @@ class Battery(object):
 
 	def __listener(self):
 		name = threading.current_thread().getName()
-		logging.debug("Running the "+name+" thread")
+		logging.debug('Running the %s thread', name)
 		while True:
-			loggind.debug('Battery voltage is %s', MCP3008(0) )
+			logging.debug('Battery voltage is %s', MCP3008(0) )
+			time.sleep(1)
 
 	def addToQueue(self,event,priority=99):
 		self.Queue.put( (priority,event) ) 
