@@ -38,13 +38,16 @@ class Battery(object):
 		while True:
 			voltage = self.__calculateBatteryVoltage()
 			logging.debug('Battery voltage is %s', voltage )
-			time.sleep(1)
+			time.sleep(2)
 
 	def __calculateBatteryVoltage(self):
 		# The ratio the divider is dropping our voltage by
 		divider = ( (self.r1 + self.r2) / self.r2 )
+
+		8.5
 		# expand the value read from 0 - 1 back to its real value based on vref
 		value = MCP3008(0).value * self.vref
+		.47
 		# the output voltage is the divider * the value
 		rawVoltage = divider * value
 		# our return voltage is the rawVoltage x our correction factor
