@@ -45,7 +45,7 @@ class GPS(object):
 		
 		while True:
 			data = self.gpsd.next()
-			parsedTime =  time.strp(self.gpsd.utc, "%Y-%m-%dT%H:%M:%S.000Z")
+			parsedTime =  time.strptime(self.gpsd.utc, "%Y-%m-%dT%H:%M:%S.000Z")
 			parsedEpoch =  calendar.timegm(parsedTime)
 			logging.debug('Epoch time as parsed %s', parsedEpoch)
 			logging.debug( 'latitude    %s' , self.gpsd.fix.latitude  )
