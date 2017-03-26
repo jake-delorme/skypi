@@ -52,10 +52,10 @@ def main():
 		pimanager.addToQueue(event)
 
 		# An All message
-		event = skypi.Event("SystemTest", "")
-		pimanager.addToQueue(event)
+		#event = skypi.Event("SystemTest", "")
+		#pimanager.addToQueue(event)
 
-		time.sleep(6000)
+		time.sleep(5)
 
 
 class Mainqueue(threading.Thread):
@@ -83,6 +83,8 @@ class Mainqueue(threading.Thread):
 			event = item[1]
 			task = event.getTask()
 			logging.debug("Process Queue task %s", task)
+
+			# Here we will get the GPS location messages and ship them out over SMS
 			if task == "GPSLocation":
 				gpslocation = event.getargs()
 				url = gpslocation.getgoogleurl()
