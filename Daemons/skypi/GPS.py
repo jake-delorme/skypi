@@ -1,27 +1,27 @@
+"""Manages retrieving data from our GPSD daemon"""
 import threading
 import logging
 import Queue
-import sys
-import os
 import time
-from Manager import Event
-from gps import *
 import calendar
 import re
+from gps import *
+from skypi.Manager import Event
+
 
 class GPS(object):
-
+	"""Runs a thread for retrieving GPS status and a queue for giving location"""
 	def __init__(self, pimanager):
 		# create the object yo
 		logging.debug("Create the GPS object")
 		self.name = "GPS"
 		self.pimanager = pimanager
 		# Create the local queue
-		self.Queue = Queue.PriorityQueue()
+		self.queue = Queue.PriorityQueue()
 
 		# GPS object
 		self.gpsd = gps(mode=WATCH_ENABLE)
-		self.gpslocation = gpslocation()
+		self.gpslocation = Gpslocation()
 
 		# Register for messages
 		self.pimanager.register(self, "SystemTest")
@@ -31,7 +31,7 @@ class GPS(object):
 		self.listenerthread = threading.Thread(target=self.__listener, name=self.name+"-listener")
 		self.listenerthread.daemon = True
 		self.listenerthread.start()
-		self.consumerthread = threading.Thread(target=self.__queueConsumer, name=self.name+"-consumer")
+		self.consumerthread = threading.Thread(target=self.__queueconsumer, name=self.name+"-consumer")
 		self.consumerthread.daemon = True
 		self.consumerthread.start()
 
@@ -41,7 +41,7 @@ class GPS(object):
 		logging.debug("Running the "+name+" thread")
 
 		while True:
-			data = self.gpsd.next()
+			self.gpsd.next()
 			# match only if we got a valid date (partial fix)
 			if re.match(r'^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.000Z', self.gpsd.utc):
 				# convert utc to epoch
@@ -73,23 +73,26 @@ class GPS(object):
 #			logging.debug( 'sats        ' , self.gpsd.satellites)
 
 	def addToQueue(self, event, priority=99):
-		self.Queue.put((priority, event)) 
+		"""Adds an item to the GPS queue to be processed"""
+		self.queue.put((priority, event))
 
-	def __queueConsumer(self):
+	def __queueconsumer(self):
 		name = threading.current_thread().getName()
 		logging.debug("Running the %s thread", name)
 		# process queue objects as the come in run the thread forever
 		while 1:
-			item = self.Queue.get(True)
+			item = self.queue.get(True)
 			task = item[1].getTask()
 			logging.debug("Process Queue task %s", task)
 			if task == "GetGPS" or task == "SystemTest":
 				event = Event("GPSLocation", self.gpslocation)
 				self.pimanager.addToQueue(event)
-			
+			else:
+				logging.error('Recieved message %s but i dont use this message', task)
+			self.queue.task_done()
 
-class gpslocation(object):
-
+class Gpslocation(object):
+	"""Holds the current GPSStatus including location"""
 	def __init__(self):
 		self.lattitude = 'Nan'
 		self.longtitude = 'Nan'
