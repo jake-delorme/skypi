@@ -35,7 +35,7 @@ def main():
 	#skypi.GSM(pimanager)
 
 	# GPS Object
-	skypi.GPS(pimanager)
+	#skypi.GPS(pimanager)
 
 	# Camera object
 	#skypi.Camera(pimanager)
