@@ -6,7 +6,7 @@ import sys
 import logging
 import time
 import skypi
-#import Queue
+import Queue
 import threading
 
 # The logging config
