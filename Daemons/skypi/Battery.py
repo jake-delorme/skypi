@@ -45,9 +45,11 @@ class Battery(object):
 		divider = (self.r1 + self.r2) / float(self.r2) 
 		logging.debug('Voltage divider modification %s', divider)
 		# expand the value read from 0 - 1 back to its real value based on vref
-		temp = MCP3008(0).value
-		logging.debug('Read %s from MCP3008' , temp)
-		value = MCP3008(0).value * self.vref
+		adc = MCP3008(0)
+		val = adc.value
+		rval = adc.raw_value
+		logging.debug('Read %s from MCP3008 (%s)' , temp,rval )
+		value = val * self.vref
 
 		# the output voltage is the divider * the value
 		rawVoltage = divider * value
