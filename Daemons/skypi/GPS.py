@@ -103,4 +103,4 @@ class Gpslocation(object):
 		self.lastaltitudefix = 0
 
 	def getgoogleurl(self):
-		return 'https://www.google.com/maps/place/@%s,%s,z16' % (self.lattitude, self.longtitude)
+		return 'https://maps.google.com/q=%s,%s' % (self.lattitude, self.longtitude)
