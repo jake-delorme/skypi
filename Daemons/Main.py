@@ -48,7 +48,7 @@ def main():
 
 	while True:
 		# A GPS message
-		event = skypi.Event("GetGPS", "lat")
+		event = skypi.Event("GetGPS", "")
 		pimanager.addToQueue(event)
 
 		# An All message
