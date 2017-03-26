@@ -44,13 +44,11 @@ class GPS(object):
 		
 		while True:
 			data = self.gpsd.next()
-			pp.pprint(self.gpsd)
 			# match only if we got a valid date (partial fix)
 			if re.match('^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.000Z', self.gpsd.utc):
 				# convert utc to epoch
 				parsedtime =  time.strptime(self.gpsd.utc, "%Y-%m-%dT%H:%M:%S.000Z")
 				parsedepoch =  calendar.timegm(parsedtime)
-				logging.debug('Epoch time as parsed %s', parsedepoch)
 				# 2 = 2D_FIX 3 = 3D_FIX
 				if self.gpsd.fix.mode > 1:
 					self.gpslocation.lattitude = self.gpsd.fix.latitude
