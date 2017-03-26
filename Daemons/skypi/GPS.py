@@ -11,21 +11,21 @@ import re
 
 class GPS(object):
 
-	def __init__(self,pimanager):
+	def __init__(self, pimanager):
 		# create the object yo
 		logging.debug("Create the GPS object")
 		self.name = "GPS"
 		self.pimanager = pimanager
 		# Create the local queue
 		self.Queue = Queue.PriorityQueue()
-		
+
 		# GPS object
 		self.gpsd = gps(mode=WATCH_ENABLE)
 		self.gpslocation = gpslocation()
 
 		# Register for messages
-		self.pimanager.register(self,"SystemTest")
-		self.pimanager.register(self,"GetGPS")
+		self.pimanager.register(self, "SystemTest")
+		self.pimanager.register(self, "GetGPS")
 
 		# Create and start the threads
 		self.listenerthread = threading.Thread(target=self.__listener, name=self.name+"-listener")
@@ -34,19 +34,19 @@ class GPS(object):
 		self.consumerthread = threading.Thread(target=self.__queueConsumer, name=self.name+"-consumer")
 		self.consumerthread.daemon = True
 		self.consumerthread.start()
-		
+
 	def __listener(self):
 		"""Continuously read the GPS data and update the gpslocation object"""
 		name = threading.current_thread().getName()
 		logging.debug("Running the "+name+" thread")
-		
+
 		while True:
 			data = self.gpsd.next()
 			# match only if we got a valid date (partial fix)
-			if re.match('^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.000Z', self.gpsd.utc):
+			if re.match(r'^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.000Z', self.gpsd.utc):
 				# convert utc to epoch
-				parsedtime =  time.strptime(self.gpsd.utc, "%Y-%m-%dT%H:%M:%S.000Z")
-				parsedepoch =  calendar.timegm(parsedtime)
+				parsedtime = time.strptime(self.gpsd.utc, "%Y-%m-%dT%H:%M:%S.000Z")
+				parsedepoch = calendar.timegm(parsedtime)
 				# 2 = 2D_FIX 3 = 3D_FIX
 				if self.gpsd.fix.mode > 1:
 					self.gpslocation.lattitude = self.gpsd.fix.latitude
@@ -71,19 +71,19 @@ class GPS(object):
 #			logging.debug( 'mode        ' , self.gpsd.fix.mode)
 #			logging.debug('')
 #			logging.debug( 'sats        ' , self.gpsd.satellites)
-			
-	def addToQueue(self,event,priority=99):
-		self.Queue.put( (priority,event) ) 
-		
+
+	def addToQueue(self, event, priority=99):
+		self.Queue.put((priority, event)) 
+
 	def __queueConsumer(self):
 		name = threading.current_thread().getName()
-		logging.debug("Running the %s thread" , name)
+		logging.debug("Running the %s thread", name)
 		# process queue objects as the come in run the thread forever
 		while 1:
 			item = self.Queue.get(True)
 			task = item[1].getTask()
-			logging.debug("Process Queue task %s" , task )
-			if task == "GetGPS":
+			logging.debug("Process Queue task %s", task)
+			if task == "GetGPS" or task == "SystemTest":
 				event = Event("GPSLocation", self.gpslocation)
 				self.pimanager.addToQueue(event)
 			

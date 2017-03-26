@@ -1,0 +1,13 @@
+GPS:
+
+-- Subscribes to:
+---- SystemTest
+------ no input
+---- GetGPS
+------ no input
+
+-- Sends:
+---- GPSLocation
+------ Sends gpslocation object
+---- GPSStatus
+------ Sends gpslocation object

@@ -24,7 +24,7 @@ GPS:
 
 
 Battery:
-	voltage (30K(G)/220K(I)) http://www.bowdenshobbycircuits.info/r2.htm
+	voltage (6.8K(G)/51K(I)) http://www.bowdenshobbycircuits.info/r2.htm
 	current draw
 	% remaining
 	runtime
