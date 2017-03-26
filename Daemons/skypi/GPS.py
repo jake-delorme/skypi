@@ -22,9 +22,10 @@ class GPS(object):
 		
 		# GPS values
 		self.gpsd = gps(mode=WATCH_ENABLE)
-		self.lattitude = None
-		self.longtitude = None
-		self.height = None
+		self.lattitude = 'Nan'
+		self.longtitude = 'Nan'
+		self.altitude = 'Nan'
+		self.lastfix = 0
 		
 		# Register for messages
 		self.piManager.register(self,"SystemTest")
@@ -46,12 +47,18 @@ class GPS(object):
 			data = self.gpsd.next()
 			pp.pprint(self.gpsd)
 			if re.match('^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.000Z', self.gpsd.utc):
-				parsedTime =  time.strptime(self.gpsd.utc, "%Y-%m-%dT%H:%M:%S.000Z")
-				parsedEpoch =  calendar.timegm(parsedTime)
-				logging.debug('Epoch time as parsed %s', parsedEpoch)
-			logging.debug( 'latitude    %s' , self.gpsd.fix.latitude  )
-			logging.debug( 'longitude   %s' , self.gpsd.fix.longitude )
-			logging.debug( 'time utc    %s + %s' , self.gpsd.utc , self.gpsd.fix.time )
+				parsedtime =  time.strptime(self.gpsd.utc, "%Y-%m-%dT%H:%M:%S.000Z")
+				parsedepoch =  calendar.timegm(parsedtime)
+				logging.debug('Epoch time as parsed %s', parsedepoch)
+				if self.gpsd.fix.latitude != 'Nan' and self.gpsd.fix.longitude != 'Nan':
+					self.lattitude = self.gpsd.fix.latitude
+					self.longtitude = self.gpsd.fix.longitude
+					self.altitude = self.gpsd.fix.altitude*3.28084
+
+			logging.debug('GPS fix mode %s', self.gpsd.fix.mode)
+#			logging.debug( 'latitude    %s' , self.gpsd.fix.latitude  )
+#			logging.debug( 'longitude   %s' , self.gpsd.fix.longitude )
+#			logging.debug( 'time utc    %s + %s' , self.gpsd.utc , self.gpsd.fix.time )
 			logging.debug( 'altitude (f) %s' , self.gpsd.fix.altitude*3.28084 )
 #			logging.debug( 'eps         ' , self.gpsd.fix.eps)
 #			logging.debug( 'epx         ' , self.gpsd.fix.epx)

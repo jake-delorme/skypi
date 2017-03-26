@@ -3,6 +3,7 @@ import threading
 import logging
 import Queue
 import time
+from Manager import Event
 from gpiozero import MCP3008
 
 
