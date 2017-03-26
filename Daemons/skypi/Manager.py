@@ -30,10 +30,10 @@ class Manager(object):
 		while 1:
 			item = self.Queue.get(True)
 			event = item[1].getTask()
-			logging.debug("Process Queue Item %s", event)
+			logging.debug("Route Queue Item %s", event)
 			for reg in self.Registrations:
 				if reg[1] == event:
-					logging.debug("Sending "+event+" to Module")
+					logging.debug("Routing %s to Module %s", event, reg[0].name)
 					reg[0].addToQueue(item[1],priority=item[0])
 			self.Queue.task_done()
 			
