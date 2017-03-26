@@ -7,6 +7,7 @@ import time
 from gps import *
 import pprint
 import calendar
+import re
 pp = pprint.PrettyPrinter(indent=4)
 
 class GPS(object):
@@ -45,9 +46,10 @@ class GPS(object):
 		
 		while True:
 			data = self.gpsd.next()
-			parsedTime =  time.strptime(self.gpsd.utc, "%Y-%m-%dT%H:%M:%S.000Z")
-			parsedEpoch =  calendar.timegm(parsedTime)
-			logging.debug('Epoch time as parsed %s', parsedEpoch)
+			if re.match(self.gpsd.utc, '^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.000Z')
+				parsedTime =  time.strptime(self.gpsd.utc, "%Y-%m-%dT%H:%M:%S.000Z")
+				parsedEpoch =  calendar.timegm(parsedTime)
+				logging.debug('Epoch time as parsed %s', parsedEpoch)
 			logging.debug( 'latitude    %s' , self.gpsd.fix.latitude  )
 			logging.debug( 'longitude   %s' , self.gpsd.fix.longitude )
 			logging.debug( 'time utc    %s + %s' , self.gpsd.utc , self.gpsd.fix.time )
