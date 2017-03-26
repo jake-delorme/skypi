@@ -25,8 +25,12 @@ def main():
 		for key in config.items(section):
 			print section + " - " + key[0] + " - " + key[1]
 
-	# Create the manager object
+	# Create the manager object (router)
 	pimanager = skypi.Manager()
+
+	# Main Queue 
+	mainqueue = Mainqueue(pimanager)
+	mainqueue.start()
 
 	# Battery object
 	#skypi.Battery(pimanager)
@@ -35,14 +39,12 @@ def main():
 	#skypi.GSM(pimanager)
 
 	# GPS Object
-	#skypi.GPS(pimanager)
+	skypi.GPS(pimanager)
 
 	# Camera object
 	#skypi.Camera(pimanager)
 
-	# Main Queue 
-	mainqueue = Mainqueue(pimanager)
-	mainqueue.start()
+	
 
 	while True:
 		# A GPS message
