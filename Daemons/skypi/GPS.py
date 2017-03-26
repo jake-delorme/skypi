@@ -6,10 +6,8 @@ import os
 import time
 from Manager import Event
 from gps import *
-import pprint
 import calendar
 import re
-pp = pprint.PrettyPrinter(indent=4)
 
 class GPS(object):
 

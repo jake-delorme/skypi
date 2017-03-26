@@ -3,7 +3,8 @@ import logging
 import Queue
 import sys
 import os
-
+import pprint
+pp = pprint.PrettyPrinter(indent=4)
 
 class Manager(object):
 
@@ -33,6 +34,7 @@ class Manager(object):
 			for reg in self.Registrations:
 				if reg[1] == event:
 					logging.debug("Sending "+event+" to Module")
+					pp.pprint(item[1])
 					reg[0].addToQueue(item[1],priority=item[0])
 			self.Queue.task_done()
 			
