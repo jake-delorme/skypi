@@ -52,10 +52,9 @@ class GPS(object):
 			#logging.debug( ' GPS reading')
 			#logging.debug( '----------------------------------------')
 			logging.debug( 'latitude    %s' , self.gpsd.fix.latitude  )
-			#print 'latitude    ' , self.gpsd.fix.latitude 
-			#logging.debug( 'longitude   ' , str(self.gpsd.fix.longitude ) )
-			#logging.debug( 'time utc    ' , str(self.gpsd.utc,' + ',str(self.gpsd.fix.time ) )
-			#logging.debug( 'altitude (m)' , str(self.gpsd.fix.altitude) )
+			logging.debug( 'longitude   %s' , self.gpsd.fix.longitude )
+			logging.debug( 'time utc    %s + %s' , (self.gpsd.utc,self.gpsd.fix.time) )
+			logging.debug( 'altitude (m) %s' , self.gpsd.fix.altitude )
 #			logging.debug( 'eps         ' , self.gpsd.fix.eps)
 #			logging.debug( 'epx         ' , self.gpsd.fix.epx)
 #			logging.debug( 'epv         ' , self.gpsd.fix.epv)
@@ -75,9 +74,9 @@ class GPS(object):
 		
 	def __queueConsumer(self):
 		name = threading.current_thread().getName()
-		logging.debug("Running the "+name+" thread")
+		logging.debug("Running the %s thread" , name)
 		# process queue objects as the come in run the thread forever
 		while 1:
 			item = self.Queue.get(True)
 			task = item[1].getTask()
-			logging.debug("Process Queue task "+task )
+			logging.debug("Process Queue task %s" , task )
