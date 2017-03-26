@@ -65,7 +65,7 @@ class GPS(object):
 #			logging.debug( 'epx         ' , self.gpsd.fix.epx)
 #			logging.debug( 'epv         ' , self.gpsd.fix.epv)
 #			logging.debug( 'ept         ' , self.gpsd.fix.ept)
-#			logging.debug( 'speed (m/s) ' , self.gpsd.fix.speed)
+#			logging.debug( 'speed (f/s) ' , self.gpsd.fix.speed*3.28084)
 #			logging.debug( 'climb       ' , self.gpsd.fix.climb)
 #			logging.debug( 'track       ' , self.gpsd.fix.track)
 #			logging.debug( 'mode        ' , self.gpsd.fix.mode)
@@ -93,9 +93,13 @@ class GPS(object):
 
 class Gpslocation(object):
 	"""Holds the current GPSStatus including location"""
+	googlebase = 'https://www.google.com/maps/preview/@%s,%s,'
 	def __init__(self):
 		self.lattitude = 'Nan'
 		self.longtitude = 'Nan'
 		self.altitude = 'Nan'
 		self.lastfix = 0
 		self.lastaltitudefix = 0
+
+	def getgoogleurl(self):
+		return googlebase , self.lattitude, self.longtitude

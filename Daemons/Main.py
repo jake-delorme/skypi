@@ -7,7 +7,7 @@ import logging
 import time
 import skypi
 #import Queue
-#import threading
+import threading
 
 # The logging config
 logging.basicConfig(level=logging.DEBUG, format='[%(levelname)s] %(asctime)s (%(threadName)-10s) %(message)s')
@@ -50,6 +50,5 @@ def main():
 		pimanager.addToQueue(event)
 
 		time.sleep(6000)
-
 
 main()
