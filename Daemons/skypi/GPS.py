@@ -20,46 +20,50 @@ class GPS(object):
 		# Create the local queue
 		self.Queue = Queue.PriorityQueue()
 		
-		# GPS values
+		# GPS object
 		self.gpsd = gps(mode=WATCH_ENABLE)
-		self.lattitude = 'Nan'
-		self.longtitude = 'Nan'
-		self.altitude = 'Nan'
-		self.lastfix = 0
-		
+		self.gpslocation = gpslocation()
+
 		# Register for messages
 		self.piManager.register(self,"SystemTest")
 		self.piManager.register(self,"GetGPS")
 
 		# Create and start the threads
-		self.listenerThread = threading.Thread(target=self.__listener, name=self.name+"-listener")
-		self.listenerThread.daemon = True
-		self.listenerThread.start()
-		self.consumerThread = threading.Thread(target=self.__queueConsumer, name=self.name+"-consumer")
-		self.consumerThread.daemon = True
-		self.consumerThread.start()
+		self.listenerthread = threading.Thread(target=self.__listener, name=self.name+"-listener")
+		self.listenerthread.daemon = True
+		self.listenerthread.start()
+		self.consumerthread = threading.Thread(target=self.__queueConsumer, name=self.name+"-consumer")
+		self.consumerthread.daemon = True
+		self.consumerthread.start()
 		
 	def __listener(self):
+		"""Continuously read the GPS data and update the gpslocation object"""
 		name = threading.current_thread().getName()
 		logging.debug("Running the "+name+" thread")
 		
 		while True:
 			data = self.gpsd.next()
 			pp.pprint(self.gpsd)
+			# match only if we got a valid date (partial fix)
 			if re.match('^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.000Z', self.gpsd.utc):
+				# convert utc to epoch
 				parsedtime =  time.strptime(self.gpsd.utc, "%Y-%m-%dT%H:%M:%S.000Z")
 				parsedepoch =  calendar.timegm(parsedtime)
 				logging.debug('Epoch time as parsed %s', parsedepoch)
-				if self.gpsd.fix.latitude != 'Nan' and self.gpsd.fix.longitude != 'Nan':
-					self.lattitude = self.gpsd.fix.latitude
-					self.longtitude = self.gpsd.fix.longitude
-					self.altitude = self.gpsd.fix.altitude*3.28084
+				# 2 = 2D_FIX 3 = 3D_FIX
+				if self.gpsd.fix.mode > 1:
+					self.gpslocation.lattitude = self.gpsd.fix.latitude
+					self.gpslocation.longtitude = self.gpsd.fix.longitude
+					self.gpslocation.lastfix = parsedepoch
+					if self.gpsd.fix.mode == 3:
+						self.gpslocation.altitude = self.gpsd.fix.altitude*3.28084
+						self.gpslocation.lastaltitudefix = parsedepoch
 
-			logging.debug('GPS fix mode %s', self.gpsd.fix.mode)
+#			logging.debug('GPS fix mode %s', self.gpsd.fix.mode)
 #			logging.debug( 'latitude    %s' , self.gpsd.fix.latitude  )
 #			logging.debug( 'longitude   %s' , self.gpsd.fix.longitude )
 #			logging.debug( 'time utc    %s + %s' , self.gpsd.utc , self.gpsd.fix.time )
-			logging.debug( 'altitude (f) %s' , self.gpsd.fix.altitude*3.28084 )
+#			logging.debug( 'altitude (f) %s' , self.gpsd.fix.altitude*3.28084 )
 #			logging.debug( 'eps         ' , self.gpsd.fix.eps)
 #			logging.debug( 'epx         ' , self.gpsd.fix.epx)
 #			logging.debug( 'epv         ' , self.gpsd.fix.epv)
@@ -81,4 +85,15 @@ class GPS(object):
 		while 1:
 			item = self.Queue.get(True)
 			task = item[1].getTask()
+			if task == "GetGPS":
+
 			logging.debug("Process Queue task %s" , task )
+
+class gpslocation(object):
+
+	def __init__(self):
+		self.lattitude = 'Nan'
+		self.longtitude = 'Nan'
+		self.altitude = 'Nan'
+		self.lastfix = 0
+		self.lastaltitudefix = 0
