@@ -1,24 +1,19 @@
 #!/usr/bin/python
+"""One Script to Rule them all. The heart of the SkyPi"""
 import ConfigParser
 import os
 import sys
 import logging
-import threading
-import Queue
 import time
 import skypi
-
-# Import all the other classes
-#import GSM
-#import Battery
-#import GPS
-#import Camera
-#import Manager
+#import Queue
+#import threading
 
 # The logging config
 logging.basicConfig(level=logging.DEBUG, format='[%(levelname)s] %(asctime)s (%(threadName)-10s) %(message)s')
 
-def Main():
+def main():
+	"""Create all the Objects and get going"""
 	config = ConfigParser.SafeConfigParser()
 	try:
 		config.readfp(open(os.path.dirname(os.path.abspath(__file__)) + "/config.ini"))
@@ -31,34 +26,30 @@ def Main():
 			print section + " - " + key[0] + " - " + key[1]
 
 	# Create the manager object
-	piManager = skypi.Manager()
+	pimanager = skypi.Manager()
 
 	# Battery object
-	piBattery = skypi.Battery(piManager)
+	skypi.Battery(pimanager)
 
 	# GSM object
-	piGSM = skypi.GSM(piManager)
-	
+	skypi.GSM(pimanager)
+
 	# GPS Object
-	piGPS = skypi.GPS(piManager)
+	skypi.GPS(pimanager)
 
 	# Camera object
-	piCamera = skypi.Camera(piManager)
-
+	skypi.Camera(pimanager)
 
 	while True:
-		# A GPS message 
-		event = skypi.Event("GetGPS","lat")
-		piManager.addToQueue(event)
+		# A GPS message
+		event = skypi.Event("GetGPS", "lat")
+		pimanager.addToQueue(event)
 
 		# An All message
-		event = skypi.Event("SystemTest","")
-		piManager.addToQueue(event)
+		event = skypi.Event("SystemTest", "")
+		pimanager.addToQueue(event)
 
 		time.sleep(6000)
 
 
-Main()
-
-
-
+main()
