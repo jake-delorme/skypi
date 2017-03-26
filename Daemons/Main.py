@@ -66,6 +66,7 @@ class Mainqueue(threading.Thread):
 		self.pimanager = pimanager
 		self.queue = Queue.PriorityQueue()
 		self.name = 'MainQueue'
+		self.registerformessages()
 
 	def registerformessages(self):
 		self.pimanager.register(self, "GPSLocation")
