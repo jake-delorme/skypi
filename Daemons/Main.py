@@ -59,7 +59,7 @@ def main():
 class Mainqueue(threading.Thread):
 
 	def __init__(self, pimanager):
-		threading.Thread.__init__(self)
+		super(Mainqueue,self).__init__()
 		self.daemon = True
 		self.pimanager = pimanager
 		self.queue = Queue.PriorityQueue()
