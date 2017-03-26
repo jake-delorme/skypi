@@ -38,15 +38,13 @@ class GPS(object):
 		self.consumerThread.daemon = True
 		self.consumerThread.start()
 		
-		
-
 	def __listener(self):
 		name = threading.current_thread().getName()
 		logging.debug("Running the "+name+" thread")
 		
 		while True:
 			data = self.gpsd.next()
-			pp.pprint(self.gpsd.fix)
+			pp.pprint(self.gpsd)
 			if re.match('^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.000Z', self.gpsd.utc):
 				parsedTime =  time.strptime(self.gpsd.utc, "%Y-%m-%dT%H:%M:%S.000Z")
 				parsedEpoch =  calendar.timegm(parsedTime)
@@ -66,9 +64,6 @@ class GPS(object):
 #			logging.debug('')
 #			logging.debug( 'sats        ' , self.gpsd.satellites)
 			
-
-
-
 	def addToQueue(self,event,priority=99):
 		self.Queue.put( (priority,event) ) 
 		
