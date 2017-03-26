@@ -29,16 +29,16 @@ def main():
 	pimanager = skypi.Manager()
 
 	# Battery object
-	skypi.Battery(pimanager)
+	#skypi.Battery(pimanager)
 
 	# GSM object
-	skypi.GSM(pimanager)
+	#skypi.GSM(pimanager)
 
 	# GPS Object
 	skypi.GPS(pimanager)
 
 	# Camera object
-	skypi.Camera(pimanager)
+	#skypi.Camera(pimanager)
 
 	while True:
 		# A GPS message
