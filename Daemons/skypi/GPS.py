@@ -46,7 +46,7 @@ class GPS(object):
 		
 		while True:
 			data = self.gpsd.next()
-			pp.pprint(self.gpsd)
+			pp.pprint(self.gpsd.fix)
 			if re.match('^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.000Z', self.gpsd.utc):
 				parsedTime =  time.strptime(self.gpsd.utc, "%Y-%m-%dT%H:%M:%S.000Z")
 				parsedEpoch =  calendar.timegm(parsedTime)
