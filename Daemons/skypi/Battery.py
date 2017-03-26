@@ -17,7 +17,7 @@ class Battery(object):
 		# Create the local queue
 		self.Queue = Queue.PriorityQueue()
 		# The voltage mathing
-		self.vref = 2.96
+		self.vref = 3.5
 		self.r1 = 51000
 		self.r2 = 6800
 		self.correctionFactor = 1
