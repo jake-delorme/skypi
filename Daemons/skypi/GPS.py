@@ -86,7 +86,7 @@ class GPS(object):
 			task = item[1].getTask()
 			logging.debug("Process Queue task %s" , task )
 			if task == "GetGPS":
-				event = Manager.Event("GPSLocation", self.gpslocation)
+				event = Event("GPSLocation", self.gpslocation)
 				self.pimanager.addToQueue(event)
 			
 
