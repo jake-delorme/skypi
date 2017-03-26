@@ -4,6 +4,7 @@ import Queue
 import sys
 import os
 import time
+from Manager import Event
 from gps import *
 import pprint
 import calendar
@@ -12,11 +13,11 @@ pp = pprint.PrettyPrinter(indent=4)
 
 class GPS(object):
 
-	def __init__(self,piManager):
+	def __init__(self,pimanager):
 		# create the object yo
 		logging.debug("Create the GPS object")
 		self.name = "GPS"
-		self.piManager = piManager
+		self.pimanager = pimanager
 		# Create the local queue
 		self.Queue = Queue.PriorityQueue()
 		
@@ -85,9 +86,11 @@ class GPS(object):
 		while 1:
 			item = self.Queue.get(True)
 			task = item[1].getTask()
-			if task == "GetGPS":
-
 			logging.debug("Process Queue task %s" , task )
+			if task == "GetGPS":
+				event = pimanager.Event("GPSLocation", self.gpslocation)
+				self.pimanager.addToQueue(event)
+			
 
 class gpslocation(object):
 
