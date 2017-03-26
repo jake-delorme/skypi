@@ -40,6 +40,10 @@ def main():
 	# Camera object
 	#skypi.Camera(pimanager)
 
+	# Main Queue 
+	mainqueue = Mainqueue(pimanager)
+	Mainqueue.start()
+
 	while True:
 		# A GPS message
 		event = skypi.Event("GetGPS", "lat")
@@ -50,5 +54,39 @@ def main():
 		pimanager.addToQueue(event)
 
 		time.sleep(6000)
+
+
+class Mainqueue(threading.Thread):
+
+	def __init__(self, pimanager):
+		self.daemon = True
+		self.pimanager = pimanager
+		self.queue = Queue.PriorityQueue()
+		self.name = "MainQueue"
+
+	def registerformessages(self):
+		self.pimanager.register(self, "GPSLocation")
+
+	def addToQueue(self, event, priority=99):
+		"""Adds an item to the GPS queue to be processed"""
+		self.queue.put((priority, event))
+
+	def run(self):
+		name = threading.current_thread().getName()
+		logging.debug('Running the %s thread', name)
+		while True:
+			item = self.queue.get(True)
+			event = item[1].getTask()
+			task = event.getTask()
+			logging.debug("Process Queue task %s", task)
+			if task == "GPSLocation":
+				gpslocation = event.getargs()
+				url = gpslocation.getgoogleurl()
+				logging.info('Current location url %s', url)
+			
+			self.queue.task_done()
+
+
+
 
 main()
