@@ -80,7 +80,7 @@ class Mainqueue(threading.Thread):
 		logging.debug('Running the %s thread', name)
 		while True:
 			item = self.queue.get(True)
-			event = item[1].getTask()
+			event = item[1]
 			task = event.getTask()
 			logging.debug("Process Queue task %s", task)
 			if task == "GPSLocation":
