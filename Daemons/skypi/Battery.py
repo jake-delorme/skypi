@@ -48,7 +48,7 @@ class Battery(object):
 		adc = MCP3008(0)
 		val = adc.value
 		rval = adc.raw_value
-		logging.debug('Read %s from MCP3008 (%s)' , temp,rval )
+		logging.debug('Read %s from MCP3008 (%s)' , val,rval )
 		value = val * self.vref
 
 		# the output voltage is the divider * the value
