@@ -26,8 +26,8 @@ class GPS(object):
 		self.gpslocation = gpslocation()
 
 		# Register for messages
-		self.piManager.register(self,"SystemTest")
-		self.piManager.register(self,"GetGPS")
+		self.pimanager.register(self,"SystemTest")
+		self.pimanager.register(self,"GetGPS")
 
 		# Create and start the threads
 		self.listenerthread = threading.Thread(target=self.__listener, name=self.name+"-listener")
