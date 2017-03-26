@@ -65,10 +65,10 @@ class Event(object):
 		self.task = task
 		self.additionalargs = {}
 
-	def setAdditionalArg(self,name,value):
+	def setadditionalarg(self,name,value):
 		self.additionalargs[name] = value
 
-	def getAdditionalArg(self,name):
+	def getadditionalarg(self,name):
 		return(self.additionalargs[name])
 
 	def getTask(self):
