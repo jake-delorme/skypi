@@ -86,6 +86,7 @@ class GPS(object):
 			logging.debug("Process Queue task %s", task)
 			if task == "GetGPS" or task == "SystemTest":
 				event = Event("GPSLocation", self.gpslocation)
+				event.setadditionalarg("callingevent", item[1])
 				self.pimanager.addToQueue(event)
 			else:
 				logging.error('Recieved message %s but i dont use this message', task)
