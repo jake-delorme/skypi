@@ -94,7 +94,7 @@ class GPS(object):
 
 class Gpslocation(object):
 	"""Holds the current GPSStatus including location"""
-	googlebase = 'https://www.google.com/maps/preview/@%s,%s,'
+	
 	def __init__(self):
 		self.lattitude = 'Nan'
 		self.longtitude = 'Nan'
@@ -103,4 +103,4 @@ class Gpslocation(object):
 		self.lastaltitudefix = 0
 
 	def getgoogleurl(self):
-		return googlebase , self.lattitude, self.longtitude
+		return  'https://www.google.com/maps/preview/@%s,%s,', self.lattitude, self.longtitude
