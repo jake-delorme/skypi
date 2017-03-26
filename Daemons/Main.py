@@ -37,13 +37,13 @@ def Main():
 	piBattery = skypi.Battery(piManager)
 
 	# GSM object
-	#piGSM = skypi.GSM(piManager)
+	piGSM = skypi.GSM(piManager)
 	
 	# GPS Object
-	#piGPS = skypi.GPS(piManager,config.get("GPS","port"),config.get("GPS","baudrate"))
+	piGPS = skypi.GPS(piManager)
 
 	# Camera object
-	#piCamera = skypi.Camera(piManager)
+	piCamera = skypi.Camera(piManager)
 
 
 	while True:

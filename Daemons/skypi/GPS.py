@@ -10,12 +10,10 @@ pp = pprint.PrettyPrinter(indent=4)
 
 class GPS(object):
 
-	def __init__(self,piManager,serialPort,baud):
+	def __init__(self,piManager):
 		# create the object yo
 		logging.debug("Create the GPS object")
 		self.name = "GPS"
-		self.serialPort = serialPort
-		self.baudrate = baud
 		self.piManager = piManager
 		# Create the local queue
 		self.Queue = Queue.PriorityQueue()
@@ -46,11 +44,6 @@ class GPS(object):
 		
 		while True:
 			data = self.gpsd.next() 
-			#os.system('clear')
-			#pp.pprint(data)
-			#logging.debug('')
-			#logging.debug( ' GPS reading')
-			#logging.debug( '----------------------------------------')
 			logging.debug( 'latitude    %s' , self.gpsd.fix.latitude  )
 			logging.debug( 'longitude   %s' , self.gpsd.fix.longitude )
 			logging.debug( 'time utc    %s + %s' , self.gpsd.utc , self.gpsd.fix.time )
