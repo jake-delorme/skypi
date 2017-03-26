@@ -47,7 +47,7 @@ class GPS(object):
 			logging.debug( 'latitude    %s' , self.gpsd.fix.latitude  )
 			logging.debug( 'longitude   %s' , self.gpsd.fix.longitude )
 			logging.debug( 'time utc    %s + %s' , self.gpsd.utc , self.gpsd.fix.time )
-			logging.debug( 'altitude (m) %s' , self.gpsd.fix.altitude )
+			logging.debug( 'altitude (f) %s' , self.gpsd.fix.altitude*3.28084 )
 #			logging.debug( 'eps         ' , self.gpsd.fix.eps)
 #			logging.debug( 'epx         ' , self.gpsd.fix.epx)
 #			logging.debug( 'epv         ' , self.gpsd.fix.epv)
