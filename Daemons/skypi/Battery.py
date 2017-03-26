@@ -16,6 +16,11 @@ class Battery(object):
 		self.piManager = piManager
 		# Create the local queue
 		self.Queue = Queue.PriorityQueue()
+		# The voltage mathing
+		self.vref = 3.3
+		self.r1 = 51000
+		self.r2 = 6800
+		self.correctionFactor = 1
 		# Create and start the threads
 		self.listenerThread = threading.Thread(target=self.__listener, name=self.name+"-listener")
 		self.listenerThread.daemon = True
@@ -29,9 +34,22 @@ class Battery(object):
 	def __listener(self):
 		name = threading.current_thread().getName()
 		logging.debug('Running the %s thread', name)
+		batV = MCP3008(0).value
 		while True:
-			logging.debug('Battery voltage is %s', MCP3008(0) )
+			voltage = self.__calculateBatteryVoltage()
+			logging.debug('Battery voltage is %s', voltage )
 			time.sleep(1)
+
+	def __calculateBatteryVoltage(self):
+		# The ratio the divider is dropping our voltage by
+		divider = ( (self.r1 + self.r2) / self.r2 )
+		# expand the value read from 0 - 1 back to its real value based on vref
+		value = MCP3008(0).value * self.vref
+		# the output voltage is the divider * the value
+		rawVoltage = divider * value
+		# our return voltage is the rawVoltage x our correction factor
+		returnVoltage = rawVoltage * self.correctionFactor
+		return(returnVoltage)
 
 	def addToQueue(self,event,priority=99):
 		self.Queue.put( (priority,event) ) 
