@@ -19,7 +19,6 @@ class Manager(object):
 		self.consumerThread.daemon = True
 		self.consumerThread.start()
 
-
 	def addToQueue(self,event,priority=99):
 		self.Queue.put( (priority,event) ) 
 		
@@ -29,15 +28,14 @@ class Manager(object):
 		# process queue objects as the come in run the thread forever
 		while 1:
 			item = self.Queue.get(True)
-			logging.debug("Process Queue Item")
 			event = item[1].getTask()
+			logging.debug("Process Queue Item %s", event)
 			for reg in self.Registrations:
 				if reg[1] == event:
 					logging.debug("Sending "+event+" to Module")
 					reg[0].addToQueue(item[1],priority=item[0])
 			self.Queue.task_done()
 			
-
 	def register(self,queue,event):
 		reg = (queue,event)
 		try:
