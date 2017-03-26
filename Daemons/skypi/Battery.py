@@ -43,7 +43,7 @@ class Battery(object):
 	def __calculateBatteryVoltage(self):
 		# The ratio the divider is dropping our voltage by
 		divider = ( (self.r1 + self.r2) / self.r2 )
-		logging.debug('Voltage divider modification %s' divider)
+		logging.debug('Voltage divider modification %s', divider)
 		# expand the value read from 0 - 1 back to its real value based on vref
 		temp = MCP3008(0).value
 		logging.debug('Read %s from MCP3008' , temp)
