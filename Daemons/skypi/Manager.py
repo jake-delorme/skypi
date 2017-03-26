@@ -41,9 +41,9 @@ class Manager(object):
 		reg = (queue,event)
 		try:
 			self.Registrations.index(reg)
-			logging.debug("Module has already registered for "+event)
+			logging.debug("Module %s has already registered for %s", queue.name, event)
 		except ValueError:
-			logging.debug("Module has registered for "+event)
+			logging.debug("Module %s has registered for %s", queue.name, event)
 			self.Registrations.append( (queue,event) )
 		return(0)
 		
@@ -51,9 +51,9 @@ class Manager(object):
 		reg = (queue,event)
 		try:
 			self.Registrations.remove( (queue,event) )
-			logging.debug("Module has deregistered for "+event)
+			logging.debug("Module %s has deregistered for %s", queue.name, event)
 		except ValueError:
-			logging.debug("Module is not registered for "+event)
+			logging.debug("Module %s is not registered for %s", queue.name, event)
 		return(0)
 
 
