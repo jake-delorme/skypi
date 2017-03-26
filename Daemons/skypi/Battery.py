@@ -44,7 +44,10 @@ class Battery(object):
 		# The ratio the divider is dropping our voltage by
 		divider = ( (self.r1 + self.r2) / self.r2 )
 		# expand the value read from 0 - 1 back to its real value based on vref
+		temp = MCP3008(0).value
+		logging.debug('Read %s from MCP3008' , temp)
 		value = MCP3008(0).value * self.vref
+
 		# the output voltage is the divider * the value
 		rawVoltage = divider * value
 		# our return voltage is the rawVoltage x our correction factor
