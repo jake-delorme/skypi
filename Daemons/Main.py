@@ -42,7 +42,7 @@ def main():
 
 	# Main Queue 
 	mainqueue = Mainqueue(pimanager)
-	Mainqueue.start()
+	mainqueue.start()
 
 	while True:
 		# A GPS message
@@ -69,7 +69,7 @@ class Mainqueue(threading.Thread):
 		self.pimanager.register(self, "GPSLocation")
 
 	def addToQueue(self, event, priority=99):
-		"""Adds an item to the GPS queue to be processed"""
+		"""Adds an item to the Main queue to be processed"""
 		self.queue.put((priority, event))
 
 	def run(self):
