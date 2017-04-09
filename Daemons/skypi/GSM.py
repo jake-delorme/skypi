@@ -39,8 +39,12 @@ class GSM(object):
 		name = threading.current_thread().getName()
 		logging.debug("Running the "+name+" thread")
 		folders = self.phone.GetSMSFolders()
+		SMS = 
 		for f in folders:
 			logging.debug("Found SMS folder %s", f)
+			if f.Inbox == 1:
+				sms = self.phone.GetNextSMS(Folder=f,Start=True)
+				print logging.debug("Got SMS %s",sms)
 
 	def addToQueue(self,event,priority=99):
 		self.Queue.put( (priority,event) ) 
