@@ -42,7 +42,7 @@ class GSM(object):
 		SMS = 
 		for f in folders:
 			logging.debug("Found SMS folder %s", f)
-			if f.Inbox == 1:
+			if f['Inbox'] == 1:
 				sms = self.phone.GetNextSMS(Folder=f,Start=True)
 				print logging.debug("Got SMS %s",sms)
 
