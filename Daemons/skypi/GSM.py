@@ -15,6 +15,8 @@ class GSM(object):
 		self.piManager = piManager
 		# Create the local queue
 		self.Queue = Queue.PriorityQueue()
+		# Connect to the phone
+		self.__connecttophone()
 		# Create and start the threads
 		self.listenerThread = threading.Thread(target=self.__listener, name=self.name+"-listener")
 		self.listenerThread.daemon = True
@@ -25,9 +27,20 @@ class GSM(object):
 		# Register for messages
 		self.piManager.register(self,"SystemTest")
 
+	def __connecttophone(self):
+		sm = gammu.StateMachine()
+		# Read ~/.gammurc
+		sm.ReadConfig()
+		# Connect to phone
+		sm.Init()
+		self.phone = sm
+
 	def __listener(self):
 		name = threading.current_thread().getName()
 		logging.debug("Running the "+name+" thread")
+		folders = self.phone.GetSMSFolders()
+		for f in folders:
+			logging.debug("Found SMS folder %s", f)
 
 	def addToQueue(self,event,priority=99):
 		self.Queue.put( (priority,event) ) 
@@ -41,8 +54,13 @@ class GSM(object):
 			task = item[1].getTask()
 			logging.debug("Process Queue task "+task )
 
-
-
+	def __sendsms(self):
+		message = {
+			'Text': 'python-gammu testing message',
+			'SMSC': {'Location': 1},
+			'Number': '+584126555508',
+			}
+		self.phone.SendSMS(message)
 
 	def holder():
 		temp = '''

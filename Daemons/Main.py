@@ -36,10 +36,10 @@ def main():
 	#skypi.Battery(pimanager)
 
 	# GSM object
-	#skypi.GSM(pimanager)
+	skypi.GSM(pimanager)
 
 	# GPS Object
-	skypi.GPS(pimanager)
+	#skypi.GPS(pimanager)
 
 	# Camera object
 	#skypi.Camera(pimanager)
