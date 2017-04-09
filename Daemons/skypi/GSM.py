@@ -39,7 +39,6 @@ class GSM(object):
 		name = threading.current_thread().getName()
 		logging.debug("Running the "+name+" thread")
 		folders = self.phone.GetSMSFolders()
-		SMS = 
 		for f in folders:
 			logging.debug("Found SMS folder %s", f)
 			if f['Inbox'] == 1:
