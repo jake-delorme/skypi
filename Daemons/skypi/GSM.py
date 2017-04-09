@@ -3,7 +3,7 @@ import logging
 import Queue
 import sys
 import os
-#import gammu
+import gammu
 
 
 class GSM(object):
